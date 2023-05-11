@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- SQL문을 기술하는 공간 -->
+ <!-- namespace : 해당하는 mapper파일을 사용하게 될 DAO이름 작성 -->
+ 
+ <mapper namespace="kr.pitb.model.UserDAO">
+ 	
+ 	<!--  parameterType : DAO에서 받아오는 데이터가 있을 때 작성,
+ 						  >> 반드시 FULL NAME 작성(패키지명까지) -->
+ 	<insert id="join" parameterType="kr.pitb.model.UserVO">
+ 		insert into 회원 (회원id , 비밀번호, 닉네임)
+ 		values (#{id} , #{pw}, #{nickname})
+ 	</insert>
+ 	
+ 	<select id="login" parameterType="kr.pitb.model.UserVO"
+ 		resultType="kr.pitb.model.UserVO">
+ 		select 회원ID as id, 비밀번호 as pw, 닉네임 as nickname
+ 		from 회원
+ 		where 회원ID=#{id} and 비밀번호=#{pw} 
+ 	</select>
+ 	
+ 	
+	<insert id="save" parameterType="kr.pitb.model.UserVO">
+ 		insert into 회원관심파일내역  (관심ID, 회원id, 저장명, 파일ID , 지역명 , 차트종류)
+ 		values (user_like_seq.nextval, #{id}, #{saveName}, #{fileId} , #{region}, #{chartType})
+ 	</insert>
+ 
+ 	<select id="mychart" parameterType="java.lang.String"
+ 		resultType="java.lang.String">
+ 		select 회원ID as id
+ 		from 회원
+ 		where 회원ID=#{id}
+ 	</select>
+ 
+ 
+ <!-- 
+ 	
+ 	
+ 	 List로 생성하는 건 mybatis 내부적으로 알아서 다 해줌 
+ 	<select id="selectAll" resultType="kr.smhrd.model.MemberVO">
+ 		select email, tel, address
+ 		from web_member
+ 		where email!='admin'
+ 	
+ 	</select>
+  -->
+ 
+ 
+ </mapper>
